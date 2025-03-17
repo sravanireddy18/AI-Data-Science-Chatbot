@@ -6,8 +6,8 @@ from langchain_community.chat_message_histories import SQLChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 import os
 
-with open(r"C:\Users\bsrav\INNOMATICS\INNOMATICS_NOTEBOOK\INTERNSHIP\keys\gemini.txt.txt","r") as f:
-    API_KEY =f.read().strip()
+# API_KEY = os.getenv("api_key")
+API_KEY =""
 
 template = ChatPromptTemplate(
     messages=[
@@ -22,14 +22,14 @@ output = StrOutputParser()
 chain = template | model | output
 
 def messages_history(session_id):
-    return SQLChatMessageHistory(session_id=session_id, connection="sqlite:///Chat_history/sqlite.db")
+    return SQLChatMessageHistory(session_id=session_id, connection="sqlite:///sqlite.db")
 
 conversation_chain = RunnableWithMessageHistory(
     chain, messages_history, input_message_key="input", history_messages_key="chat_history"
 )
 
 with st.sidebar:
-    st.title("🤖 AI Data Science Chatbot")
+    st.title("🧠 Smart Data Science Assistant")
     st.header("User Login")
     user_id = st.text_input("Enter your User ID:", key="user_id_input")
 
